@@ -12,6 +12,6 @@ req = {
 
 res = {locals:{}};
 
-functionToTest(req, res, () => { }).then(() => {
+functionToTest(req, res).then(() => {
     console.log(JSON.stringify(res.locals.files))
 })

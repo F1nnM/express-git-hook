@@ -40,7 +40,7 @@ function rmdir(dir) {
 
 module.exports = function (repositoryUrl, clonePath, cloneOptions) {
 
-    return async function (req, res, next) {
+    return async function (req, res, next = () => {}) {
         var data = JSON.parse(req.body);
 
         // event received for a different repo then specified 
