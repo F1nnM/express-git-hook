@@ -1,0 +1,28 @@
+{
+  "name": "express-git-hook",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/F1nnM/express-git-hook.git"
+  },
+  "keywords": [
+    "express",
+    "git",
+    "webhook",
+    "github"
+  ],
+  "author": "Finn Melzer",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/F1nnM/express-git-hook/issues"
+  },
+  "homepage": "https://github.com/F1nnM/express-git-hook#readme",
+  "dependencies": {
+    "git-clone": "^0.2.0"
+  }
+}
