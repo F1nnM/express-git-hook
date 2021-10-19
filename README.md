@@ -25,11 +25,16 @@ var app = express();
 
 const hook = require('express-git-hook');
 // URL of the repo, directory to clone into, [Optional: options for cloning]
-const mw = hook("https://github.com/F1nnM/express-git-hook", "./test");
+const mw = hook('https://github.com/F1nnM/express-git-hook', "./test");
 
 // for all requests
-app.use(mw);
-
-// for a specfic route
-app.use("/route/", mw);
+app.post('/', mw, (req, res) => {
+    // res.locals.files contains a list of all files with their full paths
+    // if, e.g. you always want to read the file config/main.json, 
+    // you can use the following:
+    let path = res.locals.files['config']['main.json'];
+    fs.readFile(path, 'utf-8', (err, data) => {
+        //...
+    })
+})
 ```
