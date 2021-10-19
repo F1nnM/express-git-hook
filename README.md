@@ -19,7 +19,7 @@ const hook = require('express-git-hook');
  * `options`: Optional. [Options for git-clone](https://www.npmjs.com/package/git-clone#common-options)
 # Usage
 
-```
+```JavaScript
 var express = require('express');
 var app = express();
 
