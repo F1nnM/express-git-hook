@@ -21,14 +21,14 @@ function buildFileTree(rootDir) {
 
 const multihook = function (clonePaths, cloneOptions) {
 
-  return async function (req, res, next = () => { }) {
+  return function (req, res, next = () => { }) {
 
     req.setEncoding('utf8');
     req.rawBody = '';
     req.on('data', function (chunk) {
       req.rawBody += chunk;
     });
-    req.on('end', function () {
+    req.on('end', async function () {
       // all data received
 
       // decode string
