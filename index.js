@@ -5,65 +5,60 @@ const fs = require('fs');
 const path = require('path')
 
 function buildFileTree(rootDir) {
-    var dir = {};
-    fs.readdirSync(rootDir).forEach(file => {
-        if (file == ".git")
-            return;
-        let filePath = path.resolve(rootDir, file);
-        if (fs.lstatSync(filePath).isDirectory()) {
-            dir[file] = buildFileTree(filePath);
-        } else {
-            dir[file] = filePath;
-        }
-    });
-    return dir;
-}
-
-function rmdir(dir) {
-    var list = fs.readdirSync(dir);
-    for (var i = 0; i < list.length; i++) {
-        var filename = path.join(dir, list[i]);
-        var stat = fs.statSync(filename);
-
-        if (filename == "." || filename == "..") {
-            // pass these files
-        } else if (stat.isDirectory()) {
-            // rmdir recursively
-            rmdir(filename);
-        } else {
-            // rm fiilename
-            fs.unlinkSync(filename);
-        }
+  var dir = {};
+  fs.readdirSync(rootDir).forEach(file => {
+    if (file == ".git")
+      return;
+    let filePath = path.resolve(rootDir, file);
+    if (fs.lstatSync(filePath).isDirectory()) {
+      dir[file] = buildFileTree(filePath);
+    } else {
+      dir[file] = filePath;
     }
-    fs.rmdirSync(dir);
-};
+  });
+  return dir;
+}
 
 const multihook = function (clonePaths, cloneOptions) {
 
-    return async function (req, res, next = () => { }) {
-        var data = JSON.parse(req.body);
+  return async function (req, res, next = () => { }) {
 
-        // event received for a different repo then specified 
-        if (!Object.keys(clonePaths).includes(data.repository.url))
-            res.status(403).end();
+    req.setEncoding('utf8');
+    req.rawBody = '';
+    req.on('data', function (chunk) {
+      req.rawBody += chunk;
+    });
+    req.on('end', function () {
+      // all data received
 
-        var clonePath = clonePaths[data.repository.url];
+      // decode string
+      req.body = decodeURIComponent(req.rawBody.substring(8, req.rawBody.length));
+      
+      var data = JSON.parse(req.body);
 
-        if (fs.existsSync(clonePath)) {
-            fs.rmdirSync(clonePath, { recursive: true })
-        }
+      // event received for a different repo then specified 
+      if (!Object.keys(clonePaths).includes(data.repository.full_name))
+        res.status(403).end();
 
-        await clone(data.repository.url, clonePath, cloneOptions);
+      var clonePath = clonePaths[data.repository.full_name];
 
-        res.locals.files = buildFileTree(clonePath);
+      if (fs.existsSync(clonePath)) {
+        fs.rmdirSync(clonePath, { recursive: true })
+      }
 
-        next();
-    }
+      await clone("https://github.com/" + data.repository.full_name, clonePath, cloneOptions);
+
+      res.locals.files = buildFileTree(clonePath);
+
+      next();
+
+    });
+  }
 }
 
 module.exports = {
-    multihook,
-    hook: function(repository, clonePath, options) {
-        return multihook({[repository]: clonePath}, options);
-    }
+  multihook,
+  hook: function (repository, clonePath, options) {
+    return multihook({ [repository]: clonePath }, options);
+  }
 }

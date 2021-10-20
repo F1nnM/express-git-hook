@@ -3,9 +3,6 @@
   "version": "0.2.1",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "node test.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/F1nnM/express-git-hook.git"
