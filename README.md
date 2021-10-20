@@ -5,7 +5,7 @@ A lightweight module for handling Github webhooks compatible with express and th
 
 ## Installation
 ```
-$ npm install express-git-hook`
+$ npm install express-git-hook
 ```
 
 ```JavaScript
