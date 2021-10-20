@@ -30,7 +30,7 @@ var app = express();
 
 const {hook} = require('express-git-hook');
 // URL of the repo, directory to clone into, [Optional: options for cloning]
-const mw = hook('https://github.com/F1nnM/express-git-hook', "./git-hook");
+const mw = hook('F1nnM/express-git-hook', "./git-hook");
 
 // for all requests
 app.post('/', mw, (req, res) => {
@@ -52,8 +52,8 @@ const {multihook} = require('express-git-hook');
 
 // Configuring the allowed repos and their clone paths
 const config = {
-    'https://github.com/F1nnM/express-git-hook': './repos/git-hook',
-    'https://github.com/F1nnM/HyperViz': './repos/hyperviz',
+    'F1nnM/express-git-hook': './repos/git-hook',
+    'F1nnM/HyperViz': './repos/hyperviz',
 }
 // create the middleware
 const mw = hook(config);
