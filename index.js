@@ -2,7 +2,8 @@
 
 const clone = require('git-clone/promise');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const del = require('del');
 
 function buildFileTree(rootDir) {
   var dir = {};
