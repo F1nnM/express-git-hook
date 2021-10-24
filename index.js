@@ -33,7 +33,7 @@ const multihook = function (clonePaths, cloneOptions) {
 
       // decode string
       req.body = decodeURIComponent(req.rawBody.substring(8, req.rawBody.length));
-      
+
       var data = JSON.parse(req.body);
 
       // event received for a different repo then specified 
@@ -42,7 +42,7 @@ const multihook = function (clonePaths, cloneOptions) {
 
       var clonePath = clonePaths[data.repository.full_name];
 
-      del.sync([clonePath+"/**", "!"+clonePath])
+      del.sync([clonePath + "/**", clonePath + "/.git", "!" + clonePath])
 
       await clone("https://github.com/" + data.repository.full_name, clonePath, cloneOptions);
 
