@@ -42,9 +42,7 @@ const multihook = function (clonePaths, cloneOptions) {
 
       var clonePath = clonePaths[data.repository.full_name];
 
-      if (fs.existsSync(clonePath)) {
-        fs.rmdirSync(clonePath, { recursive: true })
-      }
+      del.sync([clonePath+"/**", "!"+clonePath])
 
       await clone("https://github.com/" + data.repository.full_name, clonePath, cloneOptions);
 

@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/F1nnM/express-git-hook#readme",
   "dependencies": {
+    "del": "^6.0.0",
     "git-clone": "^0.2.0"
   }
 }
