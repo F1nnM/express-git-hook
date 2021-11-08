@@ -13,15 +13,17 @@ const { hook, multihook } = require('express-git-hook');
 ```
 
 ## API
-### `hook(repo, targetPath, [options])`
+### `hook(repo, targetPath, [options, [pat]])`
  * `repo` : URL of the repository to watch
  * `targetPath` : Path to a directory to clone into. Will be created, if it doesn't exist.
  * `options`: Optional. [Options for git-clone](https://www.npmjs.com/package/git-clone#common-options)
+ * `pat`: Optional. Personal Authentication Token. Needed for pulling private repos.
 
-### `multihhook(clonePaths, [options])`
+### `multihhook(clonePaths, [options, [pat]])`
 Works like `hook`, but accepts multiple repositories.
  * `clonePaths` : Object like: `{'repositoryURL': './path/to/clone/to', ...}`
  * `options`: Optional. [Options for git-clone](https://www.npmjs.com/package/git-clone#common-options)
+ * `pat`: Optional. Personal Authentication Token. Needed for pulling private repos.
 # Usage
 ## Listen for only one repository
 ```JavaScript
