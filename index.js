@@ -52,7 +52,7 @@ const multihook = function (clonePaths, cloneOptions, pat) {
 
       var clonePath = clonePaths[data.repository.full_name]
 
-      del.sync([clonePath + "/**", clonePath + "/.git", "!" + clonePath])
+      del.sync([clonePath + "/**", clonePath + "/.**", "!" + clonePath])
 
       await clone(cloneUrl, clonePath, {...cloneOptions, args: ["--recursive", "-j8", ...cloneOptions.args]})
 
