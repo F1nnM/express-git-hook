@@ -54,7 +54,7 @@ const multihook = function (clonePaths, cloneOptions, pat) {
 
       del.sync([clonePath + "/**", clonePath + "/.git", "!" + clonePath])
 
-      await clone(cloneUrl, clonePath, cloneOptions)
+      await clone(cloneUrl, clonePath, ["--recurse-submodules", "-j8", ...cloneOptions])
 
       res.locals.files = buildFileTree(clonePath)
 
